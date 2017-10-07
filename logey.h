@@ -9,4 +9,4 @@
 void captureKey(int key, std::string filename);
 void createFileHeader(std::string filename);
 void createTimeStamp(std::string filename);
-bool fexists(std::string filename);
+bool fileExists(std::string filename);

