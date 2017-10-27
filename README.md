@@ -3,9 +3,9 @@
 This project is for beginners and issues/improvements to be made in this project require only beginning level knowledge so feel free to contribute herehere.
 
 ## Project Details
- -language : C++
- -compiler : will work for any (like gnu g++)
- -environment : Windows (for now :wink:)
+ - language : C++
+ - compiler : will work for any (like gnu g++)
+ - environment : Windows (for now :wink:)
 
 ### Want To Contribute
 Just fork this Repo, add/edit necessary files and send a Pull Request.( [How to do that?](https://github.com/AliceWonderland/hacktoberfest))
