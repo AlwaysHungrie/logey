@@ -8,8 +8,9 @@ This project is for beginners and issues/improvements to be made in this project
  -environment : Windows (for now :wink:)
 
 ### Want To Contribute
-Just fork this Repo, add/edit necessary files and send a Pull Request.
-  List of issues can be found here : https://github.com/exler/logey/issues 
+Just fork this Repo, add/edit necessary files and send a Pull Request.( [How to do that?](https://github.com/AliceWonderland/hacktoberfest))
+
+List of issues can be found here : https://github.com/exler/logey/issues 
   
   Note: If you find want to add any new feature, make changes to any of the doccument (even this one :yum:) AND ARE NOT SURE HOW TO BEGIN, 
   raising an issue would be your first step, it would help you get in communication with contributors. 
@@ -32,6 +33,7 @@ Just fork this Repo, add/edit necessary files and send a Pull Request.
 5. Check out ` logey.log ` file created in the same directory for results.
 
 Have fun developing and contributing :v:
+
 Since this is a beginner repository feel free to ask us if you are facing any problem regarding use of github, or understanding the code.
 
 
